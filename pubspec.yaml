@@ -1,0 +1,10 @@
+name: TestDartMauro1
+version: 0.0.1
+description: An absolute bare-bones web app.
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+dependencies:
+  browser: any
+  p2: ">=0.5.5 <0.6.0"
+  play_pixi: ">=0.10.5 <0.11.0"
+  play_phaser: ">0.12.0 < 0.13.0"
