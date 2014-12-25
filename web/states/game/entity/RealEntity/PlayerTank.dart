@@ -1,7 +1,8 @@
 library player;
 
-import '../Tank.dart';
 import 'package:play_phaser/phaser.dart';
+
+import '../Tank.dart';
 
 class PlayerTank extends Tank {
 
@@ -10,6 +11,21 @@ class PlayerTank extends Tank {
 
   PlayerTank(num x, num y, var namet, Game game, Group bullets) : super(x, y, namet, game, bullets) {
     cursors = game.input.keyboard.createCursorKeys();
+  }
+
+  fire() {
+    if (game.time.now > nextFire && bullets.countDead() > 0) {
+      nextFire = game.time.now + fireRate;
+      var bullet = bullets.getFirstExists(false);
+      if (bullet != null){
+        bullet.reset(tank.x, tank.y);
+      
+        bullet.rotation = tank.rotation;
+      //game.physics.arcade.moveToPointer(bullet, bulletSpeed, game.input.activePointer, 500);
+        bullet.body.velocity = game.physics.arcade.velocityFromRotation(tank.rotation, bulletSpeed);
+      //bullet.rotation = game.physics.arcade.moveToPointer(bullet, 1000, game.input.activePointer, 500);
+      }
+    }
   }
 
   @override update() {
@@ -21,34 +37,20 @@ class PlayerTank extends Tank {
       tank.angle += 4;
     }
 
-    int currentSpeed = 0;
     if (cursors.up.isDown) {
-      // The speed we'll travel at
-      currentSpeed = 300;
+      num acceleration = 500;
+      tank.body.acceleration = game.physics.arcade.accelerationFromRotation(tank.rotation, acceleration);
+      //tank.body.velocity = game.physics.arcade.velocityFromRotation(tank.rotation, acceleration);
+    }else{
+      tank.body.acceleration.x=0;
+      tank.body.acceleration.y=0;
     }
-    if (cursors.down.isDown) {
-      // The speed we'll travel at
-      currentSpeed = -300;
-    }
-
-    if (currentSpeed > 0) {
-      game.physics.arcade.velocityFromRotation(tank.rotation, currentSpeed, tank.body.velocity);
-    }
-    // Position all the parts and align rotations
-    turret.rotation = game.physics.arcade.angleToPointer(turret);
     
-    if (game.input.activePointer.isDown) {
+    if ( game.input.keyboard.isDown(32) ) {//spacebar
       // Boom!
       fire();
     }
-  }
-
-  fire() {
-    if (game.time.now > nextFire && bullets.countDead() > 0) {
-      nextFire = game.time.now + fireRate;
-      var bullet = bullets.getFirstExists(false);
-      bullet.reset(turret.x, turret.y);
-      bullet.rotation = game.physics.arcade.moveToPointer(bullet, 1000, game.input.activePointer, 500);
-    }
+    
+    
   }
 }

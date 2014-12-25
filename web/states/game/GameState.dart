@@ -26,11 +26,12 @@ class GameState extends State {
   int estimatedAliveBody = 0;
 
   void create() {
+   
     // Resize our game world to be a 2000 x 2000 square
-    game.world.setBounds(0, 0, 1024, 768);
+    game.world.setBounds(0, 0, game.width,  game.height);
 
     // Our tiled scrolling background
-    land = game.add.tileSprite(0, 0, 1024, 768, 'background');
+    land = game.add.tileSprite(0, 0,  game.width,  game.height, 'background');
     land.fixedToCamera = true;
 
     //be sure there is no gravity

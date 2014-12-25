@@ -4,8 +4,11 @@
 //import "dart:html" as dom;
 import "package:play_phaser/phaser.dart";
 import 'states/game/GameState.dart';
+import 'dart:html';
 
 
 main() {
-  Game game = new Game(1024, 768, WEBGL, 'phaser-example', new GameState());
+  num x = window.innerHeight-100;
+  num y = window.innerWidth-100;
+  Game game = new Game(y, x, WEBGL, 'phaser-example', new GameState());
 }
