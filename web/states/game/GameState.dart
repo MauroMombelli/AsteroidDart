@@ -7,7 +7,9 @@ import 'entity/RealEntity/PlayerTank.dart';
 class GameState extends State {
   preload() {
     game.load.atlas('tank', 'assets/game/pack1/tanks.png', 'assets/game/pack1/tanks.json');
-    game.load.atlas('enemy', 'assets/game/pack1/enemy-tanks.png', 'assets/game/pack1/tanks.json');
+    game.load.atlas('enemy1', 'assets/game/pack1/enemy-tanks1.png', 'assets/game/pack1/tanks.json');
+    game.load.atlas('enemy2', 'assets/game/pack1/enemy-tanks2.png', 'assets/game/pack1/tanks.json');
+    game.load.atlas('enemy3', 'assets/game/pack1/enemy-tanks3.png', 'assets/game/pack1/tanks.json');
     //game.load.image('logo', 'assets/games/tanks/logo.png');
     game.load.image('bullet', 'assets/game/pack1/bullet.png');
     game.load.image('background', 'assets/game/pack1/scorched_earth.png');
@@ -39,7 +41,7 @@ class GameState extends State {
     game.physics.arcade.gravity.y = 0;
 
     // Create some baddies to waste :)
-    int enemiesTotal = 10;
+    int enemiesTotal = 1;
     for (var i = 0; i < enemiesTotal; i++) {
       var x = game.world.randomX;
       var y = game.world.randomY;
@@ -82,23 +84,23 @@ class GameState extends State {
     List<Meteor> enemiesAliveAtTheirUpdate = [];
     for (var i = 0; i < enemies.length; i++) {
       //if alive
-      if (enemies[i].alive) {
+      if ( enemies[i].isAlive() ) {
         //check for collision with all other body alive at the be
         for (var c = 0; c < enemiesAliveAtTheirUpdate.length; c++) {
           //if otherbody still alive (may be dead after some collision after its update!)
-          if (enemiesAliveAtTheirUpdate[c].alive) {
+          if (enemiesAliveAtTheirUpdate[c].isAlive()) {
             //check for collision
             game.physics.arcade.collide(enemies[i].tank, enemiesAliveAtTheirUpdate[c].tank, enemyHitEnemy);
           }
           //if the actual body is dead by collion, exit this loop early
-          if (!enemies[i].alive) {
+          if ( !enemies[i].isAlive() ) {
             break;
           }
         }
       }
 
       //if still alive
-      if (enemies[i].alive) {
+      if ( enemies[i].isAlive() ) {
         //if still alive add to alive list
         enemiesAliveAtTheirUpdate.add(enemies[i]);
         //check for collision with player or bullet

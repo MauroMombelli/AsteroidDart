@@ -11,6 +11,12 @@ class PlayerTank extends Tank {
 
   PlayerTank(num x, num y, var namet, Game game, Group bullets) : super(x, y, namet, game, bullets) {
     cursors = game.input.keyboard.createCursorKeys();
+    game.input.keyboard.addKeyCapture(Keyboard.W);
+    game.input.keyboard.addKeyCapture(Keyboard.A);
+    game.input.keyboard.addKeyCapture(Keyboard.S);
+    game.input.keyboard.addKeyCapture(Keyboard.D);
+    game.input.keyboard.addKeyCapture(Keyboard.SPACEBAR);
+    
   }
 
   fire() {
@@ -31,13 +37,13 @@ class PlayerTank extends Tank {
   @override update() {
     super.update();
     
-    if (cursors.left.isDown) {
+    if (cursors.left.isDown || game.input.keyboard.isDown(Keyboard.A)) {
       tank.angle -= 4;
-    } else if (cursors.right.isDown) {
+    } else if (cursors.right.isDown || game.input.keyboard.isDown(Keyboard.D)) {
       tank.angle += 4;
     }
 
-    if (cursors.up.isDown) {
+    if (cursors.up.isDown || game.input.keyboard.isDown(Keyboard.W)) {
       num acceleration = 500;
       tank.body.acceleration = game.physics.arcade.accelerationFromRotation(tank.rotation, acceleration);
       //tank.body.velocity = game.physics.arcade.velocityFromRotation(tank.rotation, acceleration);
@@ -46,7 +52,7 @@ class PlayerTank extends Tank {
       tank.body.acceleration.y=0;
     }
     
-    if ( game.input.keyboard.isDown(32) ) {//spacebar
+    if ( game.input.keyboard.isDown(Keyboard.SPACEBAR) ) {//spacebar
       // Boom!
       fire();
     }

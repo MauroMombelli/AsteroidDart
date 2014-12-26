@@ -6,16 +6,14 @@ import '../../GameState.dart';
 class Meteor {
   GameState game;
   
-  bool alive;
   Sprite shadow;
   Sprite tank;
   int size;
   
   Meteor(int index, GameState game, int size, num x, num y) {
     this.game = game;
-    this.alive = true;
-    this.shadow = game.add.sprite(x, y, 'enemy', 'shadow');
-    this.tank = game.add.sprite(x, y, 'enemy', 'tank1');
+    this.shadow = game.add.sprite(x, y, 'enemy'+size.toString(), 'shadow');
+    this.tank = game.add.sprite(x, y, 'enemy'+size.toString(), 'tank1');
     this.size = size;
     
     this.shadow.anchor.set(0.5);
@@ -34,7 +32,6 @@ class Meteor {
   damage(explosions) {
     this.shadow.kill();
     this.tank.kill();
-    this.alive = false;
     
     game.addExplosion(tank.x,  tank.y);
     
@@ -43,6 +40,10 @@ class Meteor {
       game.addMeteor(size, tank.x, tank.y);
       game.addMeteor(size, tank.x, tank.y);
     }
+  }
+  
+  bool isAlive(){
+    return tank.alive;
   }
   
   update() {
