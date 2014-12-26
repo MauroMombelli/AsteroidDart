@@ -121,16 +121,11 @@ class GameState extends State {
   }
   void bulletHitPlayer(GameObject tank, Sprite bullet) {
     bullet.kill();
-    //TODO: kill player
-  }
-
-  void playerHitEnemy(GameObject tankPlayer, GameObject tankEnemy) {
-    enemies[int.parse(tankEnemy.name)].damage(explosions);
-    //TODO: kill player
+    this.game.state.start('Death');
   }
 
   void protagonistHitEnemy(GameObject obj1, GameObject obj2) {
-    //TODO: kill player
+    this.game.state.start('Death');
   }
 
   void enemyHitEnemy(GameObject tankEnemy1, GameObject tankEnemy2) {

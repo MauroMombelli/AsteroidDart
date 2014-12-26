@@ -67,9 +67,9 @@ class Tank {
   }
 
   update() {
-    //this.shadow.x = this.tank.x;
-    //this.shadow.y = this.tank.y;
-    //this.shadow.rotation = this.tank.rotation; 
+    this.shadow.x = this.tank.x;
+    this.shadow.y = this.tank.y;
+    this.shadow.rotation = this.tank.rotation; 
   }
 
 }

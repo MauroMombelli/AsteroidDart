@@ -3,12 +3,22 @@
 
 //import "dart:html" as dom;
 import "package:play_phaser/phaser.dart";
-import 'states/game/GameState.dart';
+
 import 'dart:html';
+
+import 'states/menu_main/MainMenuState.dart';
+import 'states/game/GameState.dart';
+import 'states/death/DeathState.dart';
 
 
 main() {
   num x = window.innerHeight-100;
   num y = window.innerWidth-100;
-  Game game = new Game(y, x, WEBGL, 'phaser-example', new GameState());
+  
+  Game game = new Game(y, x, WEBGL, 'phaser-example');
+  game.state.add("Game", new GameState());
+  game.state.add("Death", new DeathState());
+  game.state.add("MainMenu", new MainMenuState());
+  
+  game.state.start("MainMenu");
 }
